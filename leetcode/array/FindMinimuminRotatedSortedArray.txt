@@ -1,0 +1,43 @@
+Suppose a sorted array is rotated at some pivot unknown to you beforehand.
+
+(i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+
+Find the minimum element.
+
+You may assume no duplicate exists in the array.
+
+public class Solution {
+    public int findMin(int[] num) {
+        if(num.length <= 1)
+            return num.length;
+            
+        int low = 0;
+        int high = num.length - 1;
+        
+        while(low <= high){
+            int mid = (low + high)/2;
+            
+            //case 1: no rotation
+            if(num[low] <= num[high])
+                return num[low];
+            
+            //case 2: statisfy the property of the min-node
+            //cannot use the prev = num[mid-1] and next = num[mid+1] here
+            //since it will be outbounded.
+            int prev = (mid + num.length - 1) % num.length;
+            int next = (mid + 1) % num.length;
+            if(num[mid] <= num[prev] && num[mid] <= num[next]){
+                return num[mid];
+            }
+            //case 3: mid <= high, min-node is in the left part
+            else if(num[mid] <= num[high]){
+                 high = mid - 1; 
+            }
+            //case 4: mid >= low, min-node is in the right part
+            else if(num[mid] >= num[low]){
+                 low = mid + 1;
+            }
+        }
+        return -1;
+    }
+}
