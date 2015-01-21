@@ -1,0 +1,44 @@
+4. Median of Two Sorted Array
+
+There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+public class Solution {
+    public double findMedianSortedArrays(int A[], int B[]) {
+        int len = A.length + B.length;
+        double ret;
+        //even
+        if(len % 2 == 0){
+            ret = (findKthElement(A, 0, B, 0, len / 2) 
+            + findKthElement(A, 0, B, 0, len/2 + 1))/ (2.0);
+        }else{//odd
+            ret = findKthElement(A, 0, B, 0, len/2 + 1);
+        }
+        return ret;
+    }
+    
+    public int findKthElement(int A[], int A_start, int B[],int B_start, int k){
+        //discard the first part of B with the same length of A.length
+        int lenA = A.length;
+        int lenB = B.length;
+        if(A_start >= lenA)
+            return B[B_start + k - 1];
+        if(B_start >= lenB)
+            return A[A_start + k - 1];
+        
+        if(k == 1){
+            return Math.min(A[A_start], B[B_start]);
+        }
+        int midIndex = k/2 - 1;
+
+        int valueInA = A_start + midIndex >= lenA ? Integer.MAX_VALUE : A[A_start + midIndex];
+        int valueInB = B_start + midIndex >= lenB ? Integer.MAX_VALUE : B[B_start + midIndex];
+        
+        if(valueInA < valueInB){
+            //A小了，A走一点
+            return findKthElement(A, A_start + k/2, B, B_start, k - k/2);
+        }else{
+            //B小了，B走一点
+            return findKthElement(A, A_start, B, B_start + k/2, k - k/2);
+        }
+    }
+}
