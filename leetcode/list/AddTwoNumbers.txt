@@ -1,0 +1,60 @@
+2. Add Two Numbers
+
+You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        return addTwoNumberswithCarry(l1, l2, 0);
+    }
+    
+    public ListNode addTwoNumberswithCarry(ListNode l1, ListNode l2, int carry){
+        // tow different base condtions for recursion:
+        if(l1 == null){
+            return carry == 0 ? l2:addTwoNumberswithCarry(new ListNode(1), l2, 0);
+        }
+        if(l2 == null){
+            return carry == 0 ? l1:addTwoNumberswithCarry(l1, new ListNode(1), 0);
+        }
+        int sum = l1.val + l2.val + carry;
+        ListNode ret = new ListNode(sum%10);
+        ret.next = addTwoNumberswithCarry(l1.next, l2.next, sum/10);
+        return ret;
+    }
+}
+
+public class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode ret = new ListNode(-1);
+        ListNode dummy = ret;
+        ListNode cur1 = l1;
+        ListNode cur2 = l2;
+        int carry = 0;
+        while(l1 != null || l2 != null){
+            int l1Val = l1 == null? 0:l1.val;
+            int l2Val = l2 == null? 0:l2.val;
+            int sum = l1Val + l2Val + carry;
+            ListNode newNode = new ListNode(-1);
+            if (sum >= 10){
+                sum = sum%10;
+                newNode.val = sum;
+                carry = 1;
+            }else{
+                newNode.val = sum;
+                if(carry == 1)
+                    carry = 0;
+            }
+            ret.next = newNode;
+            ret = newNode;
+            l1 = l1 == null ? null: l1.next;
+            l2 = l2 == null ? null: l2.next;
+        }
+        if(carry == 1){
+            ret.next = new ListNode(1);
+        }
+
+        return dummy.next;
+    }
+}

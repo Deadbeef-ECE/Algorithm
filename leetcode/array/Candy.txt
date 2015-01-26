@@ -1,0 +1,36 @@
+135. Candy
+
+There are N children standing in a line. Each child is assigned a rating value.
+
+You are giving candies to these children subjected to the following requirements:
+
+Each child must have at least one candy.
+Children with a higher rating get more candies than their neighbors.
+What is the minimum candies you must give?
+
+public class Solution {
+    public int candy(int[] ratings) {
+        int len = ratings.length;
+        int[] ret = new int[len]; //maxIndex = len - 1
+        int sum = 0;
+        for(int i = 0; i < len; i++){
+            ret[i] = 1;
+        }
+        //左往右扫，如果前面的小，后面的等于前面的+1
+        for(int i = 0; i <= len - 2; i++){
+            if(ratings[i] < ratings[i+1]){
+                ret[i+1] = ret[i] + 1;
+            }
+        }
+        //右往左扫，如果前面的大，前面的等于后面的+1, 并和old number取最大值
+        for(int i = len - 1; i > 0; i--){
+            if(ratings[i-1] > ratings[i]){
+                ret[i-1] = Math.max(ret[i-1], ret[i] + 1);
+            }
+            sum += ret[i];
+        }
+        //没加ret[0]
+        sum += ret[0];
+        return sum;
+    }
+}

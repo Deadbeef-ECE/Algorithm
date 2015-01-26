@@ -6,8 +6,7 @@ public class Solution {
     public double findMedianSortedArrays(int A[], int B[]) {
         int len = A.length + B.length;
         double ret;
-        //even
-        if(len % 2 == 0){
+        if(len % 2 == 0){ //even
             ret = (findKthElement(A, 0, B, 0, len / 2) 
             + findKthElement(A, 0, B, 0, len/2 + 1))/ (2.0);
         }else{//odd

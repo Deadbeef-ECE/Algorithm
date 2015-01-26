@@ -1,0 +1,60 @@
+134. Gas Station
+
+There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
+
+Return the starting gas station's index if you can travel around the circuit once, otherwise return -1.
+
+Note:
+The solution is guaranteed to be unique.
+
+public class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int[] diff = new int[gas.length];
+        int hasRet = 0;
+        for(int i = 0; i < gas.length; i++){
+            diff[i] = gas[i] - cost[i];
+            hasRet += diff[i];
+        }
+        //No solution
+        if(hasRet < 0)
+            return -1;
+        
+        int sum = 0;
+        int startnode = 0;
+        
+        for(int i = 0; i < gas.length; i++){
+            sum += diff[i];
+            if(sum < 0){
+                startnode = i + 1;
+                sum = 0;
+            }
+        }
+        return startnode;
+    }
+}
+
+public class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int hasRet = 0;
+        int sum = 0;
+        int startnode = 0;
+        int diff = 0;
+        
+        for(int i = 0; i < gas.length; i++){
+            diff = gas[i] - cost[i];
+            hasRet += diff;
+            sum += diff;
+            if(sum < 0){
+                startnode = i + 1;
+                sum = 0;
+            }
+        }
+        //No solution
+        if(hasRet < 0)
+            return -1;
+        else
+            return startnode;
+    }
+}
