@@ -43,10 +43,8 @@ public class Solution {
         List<Integer> ret = new ArrayList<Integer>();
         if(root == null)    return ret;
         LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
-        stack.push(root);
-        while(!stack.isEmpty()){
-            TreeNode top = stack.peek();
-            if(root)
+        
+        while(root != null || !stack.isEmpty()){
             if(root != null){
                 stack.push(root);
                 root = root.left;

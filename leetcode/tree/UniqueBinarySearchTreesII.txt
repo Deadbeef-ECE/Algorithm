@@ -1,0 +1,38 @@
+95. Unique Binary Search Trees II 
+
+Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
+
+For example,
+Given n = 3, your program should return all 5 unique BST's shown below.
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+
+public class Solution {
+    public List<TreeNode> generateTrees(int n) {
+        return generateTrees(1, n);
+    }
+    public List<TreeNode> generateTrees(int left, int right){
+        List<TreeNode> ret = new ArrayList<TreeNode>();
+        if(left > right){
+            ret.add(null);
+            return ret;
+        }
+        for(int i = left; i <= right; i++){
+            List<TreeNode> leftlist = generateTrees(left, i-1);
+            List<TreeNode> rightlist = generateTrees(i+1, right);
+            for(int j = 0; j < leftlist.size(); j++){
+                for(int k = 0; k < rightlist.size(); k++){
+                    TreeNode root = new TreeNode(i);
+                    root.left = leftlist.get(j);
+                    root.right = rightlist.get(k);
+                    ret.add(root);
+                }
+            }
+        }
+        return ret;
+    }
+}
