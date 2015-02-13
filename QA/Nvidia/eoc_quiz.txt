@@ -1,0 +1,5 @@
+EOC QUIZ:
+(1) Difference between latency and thoughput, when matters for each of them?
+(2) Remove duplicates from unsorted array
+(3) Describe how OS load and run executable file step by step
+(4) BONUS: Write function to caculate the Nth Fibonacci number recursively and iteratively. And analyze the complexity.
